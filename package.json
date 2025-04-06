@@ -20,6 +20,7 @@
     "@mui/material": "^7.0.1",
     "@openzeppelin/contracts": "^5.2.0",
     "aos": "^2.3.4",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.7"
   },
   "devDependencies": {

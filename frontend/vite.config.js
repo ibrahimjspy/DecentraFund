@@ -1,25 +1,31 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      "aos/dist/aos.css": path.resolve(
-        __dirname,
-        "node_modules/aos/dist/aos.css"
-      ),
+  css: {
+    postcss: {
+      plugins: [tailwindcss(), autoprefixer()],
     },
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "${path.resolve(
-          __dirname,
-          "node_modules/aos/dist/aos.css"
-        )}";`,
+  base: process.env.NODE_ENV === "production" ? "./" : "/",
+  server: {
+    open: true,
+    host: true,
+    port: 5173,
+  },
+  build: {
+    assetsDir: "assets",
+    rollupOptions: {
+      output: {
+        assetFileNames: "assets/[name]-[hash].[ext]",
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
       },
     },
+    manifest: true,
   },
+  publicDir: "public",
 });
