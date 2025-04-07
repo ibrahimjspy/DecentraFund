@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useContract } from "../../hooks/useContract";
 import { useContractContext } from "../../context/ContractContext";
 import { parseEther } from "ethers";
-import CampaignFactory from "../../contracts/CampaignFactory.json";
 
 const CreateCampaign = ({ onCampaignCreated }) => {
   const [title, setTitle] = useState("");
@@ -10,8 +8,7 @@ const CreateCampaign = ({ onCampaignCreated }) => {
   const [goal, setGoal] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState(null);
-  const { executeTx } = useContract();
-  const { account } = useContractContext();
+  const { account, contracts, executeTx } = useContractContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,15 +28,15 @@ const CreateCampaign = ({ onCampaignCreated }) => {
         throw new Error("Please enter a valid goal amount");
       }
 
-      const tx = await executeTx(
-        (
-          await getContract(
-            process.env.REACT_APP_FACTORY_ADDRESS,
-            CampaignFactory.abi
-          )
-        ).createCampaign,
-        [title, description, parseEther(goal)]
-      );
+      if (!contracts.factory) {
+        throw new Error("Contract not initialized");
+      }
+
+      const tx = await executeTx(contracts.factory.createCampaign, [
+        title,
+        description,
+        parseEther(goal),
+      ]);
 
       // Wait for transaction to be mined
       const receipt = await tx.wait();
@@ -48,7 +45,12 @@ const CreateCampaign = ({ onCampaignCreated }) => {
       setDescription("");
       setGoal("");
 
-      // Only refresh after transaction is confirmed
+      const campaignAddress = receipt.events[0].args[0]; // Assuming the campaign address is in the first event
+      const { setContracts } = useContractContext();
+      setContracts((prev) => ({
+        ...prev,
+        campaign: new Contract(campaignAddress, CampaignABI.abi, signer),
+      }));
       if (receipt.status === 1) {
         onCampaignCreated();
       } else {

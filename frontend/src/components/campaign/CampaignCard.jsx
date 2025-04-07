@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useContract } from "../../hooks/useContract";
+import { Link } from "react-router-dom";
 import { useContractContext } from "../../context/ContractContext";
 import { parseEther } from "ethers";
 import {
@@ -8,42 +8,26 @@ import {
 } from "@heroicons/react/24/outline";
 
 const CampaignCard = ({ campaign, refreshCampaigns }) => {
-  const { executeTx } = useContract();
-  const { account } = useContractContext();
+  const { account, contracts, executeTx } = useContractContext();
   const [isDonating, setIsDonating] = useState(false);
   const [donationAmount, setDonationAmount] = useState("");
   const [error, setError] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleDonate = async () => {
-    setError(null);
-    setIsDonating(true);
+    if (!account) {
+      setError("Please connect your wallet first");
+      return;
+    }
+    if (!contracts.campaign) {
+      setError("Contract not initialized");
+      return;
+    }
 
     try {
-      if (!account) {
-        throw new Error("Please connect your wallet first");
-      }
-
-      if (
-        !donationAmount ||
-        isNaN(donationAmount) ||
-        parseFloat(donationAmount) <= 0
-      ) {
-        throw new Error(
-          "Please enter a valid donation amount (minimum 0.01 ETH)"
-        );
-      }
-
-      await executeTx(
-        (
-          await getContract(
-            campaign.address,
-            require("../../contracts/Campaign.json").abi
-          )
-        ).contribute,
-        [],
-        { value: parseEther(donationAmount) }
-      );
+      const tx = await executeTx(contracts.campaign.contribute, [], {
+        value: parseEther(donationAmount),
+      });
 
       setDonationAmount("");
       refreshCampaigns();
@@ -62,6 +46,22 @@ const CampaignCard = ({ campaign, refreshCampaigns }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Campaign Image */}
+      <div className="h-48 w-full overflow-hidden">
+        <img
+          src={
+            campaign.image.startsWith("/")
+              ? campaign.image
+              : `/assets/${campaign.image}`
+          }
+          onError={(e) => {
+            e.target.src = "/assets/localart.jpg";
+            e.target.onerror = null;
+          }}
+          alt={campaign.title}
+          className="w-full h-full object-cover"
+        />
+      </div>
       {/* Progress bar */}
       <div className="h-1.5 bg-gray-100 w-full">
         <div
@@ -74,7 +74,6 @@ const CampaignCard = ({ campaign, refreshCampaigns }) => {
           }}
         />
       </div>
-
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
           <div>
@@ -131,6 +130,14 @@ const CampaignCard = ({ campaign, refreshCampaigns }) => {
         )}
 
         <div className="space-y-3">
+          <div className="text-center mb-3">
+            <Link
+              to={`/campaigns/${campaign.id}`}
+              className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+            >
+              View Details →
+            </Link>
+          </div>
           <div className="relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <CurrencyDollarIcon className="h-5 w-5 text-gray-400" />
