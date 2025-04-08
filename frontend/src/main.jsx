@@ -2,12 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import AOS from "aos";
-import "../node_modules/aos/dist/aos.css";
+import "./index.css"; // Tailwind CSS import
+import "../node_modules/aos/dist/aos.css"; // AOS CSS
 
 AOS.init({
   duration: 1000,
   easing: "ease-in-out",
-  once: true,
+  once: false,
   offset: 120,
   delay: 100,
 });

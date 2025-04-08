@@ -1,34 +1,28 @@
+# Dependency directories
+node_modules/
+lib/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Environment variables
 .env
 .env.local
-.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Foundry directories
-cache/
+# Build output
+dist/
+build/
 out/
-broadcast/
 
-# Node.js
-node_modules/
-package-lock.json
-
-# IDE
+# IDE specific files
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# Debug files
-debug.log
-*.log
-
-# Build artifacts
-artifacts/
-coverage/
-coverage.json
-
-# Mac OS
-.DS_Store
-
-# Windows
-Thumbs.db

@@ -24,7 +24,7 @@ export default function LandingPage() {
       progress: 65,
       target: 5000,
       daysLeft: 12,
-      image: "/src/assets/waterbottle.jpg",
+      image: "",
       category: "Environment",
     },
     {
@@ -35,7 +35,7 @@ export default function LandingPage() {
       progress: 40,
       target: 10000,
       daysLeft: 25,
-      image: "/src/assets/commgarden.jpg",
+      image: "",
       category: "Community",
     },
     {
@@ -46,7 +46,7 @@ export default function LandingPage() {
       progress: 85,
       target: 15000,
       daysLeft: 5,
-      image: "/src/assets/ai.jpg",
+      image: "",
       category: "Technology",
     },
   ];
@@ -108,12 +108,13 @@ export default function LandingPage() {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-transform duration-500">
                 <img
-                  src="/src/assets/landingimage.jpg"
+                  src="/assets/landingimage.jpg"
                   alt="People collaborating on creative projects"
                   className="w-full h-auto object-cover"
                   data-aos="zoom-in"
                   data-aos-delay="500"
                 />
+
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                   <div
                     className="flex items-center"

@@ -12,7 +12,7 @@ const mockCampaigns = [
     progress: 65,
     target: 5000,
     daysLeft: 12,
-    image: "/src/assets/waterbottles.jpg",
+    image: "/assets/waterbottle.jpg",
     featured: true,
   },
   {
@@ -24,7 +24,7 @@ const mockCampaigns = [
     progress: 40,
     target: 10000,
     daysLeft: 25,
-    image: "/src/assets/commgarden.jpg",
+    image: "/assets/commgarden.jpg",
     featured: false,
   },
   {
@@ -36,7 +36,7 @@ const mockCampaigns = [
     progress: 85,
     target: 15000,
     daysLeft: 5,
-    image: "/src/assets/ai.jpg",
+    image: "/assets/ai.jpg",
     featured: true,
   },
   {
@@ -47,7 +47,7 @@ const mockCampaigns = [
     progress: 30,
     target: 8000,
     daysLeft: 18,
-    image: "/src/assets/localart.jpg",
+    image: "/assets/localart.jpg",
     featured: false,
   },
   {
@@ -58,7 +58,7 @@ const mockCampaigns = [
     progress: 90,
     target: 12000,
     daysLeft: 3,
-    image: "/src/assets/childreneducation.jpg",
+    image: "/assets/childreneducation.jpg",
     featured: true,
   },
   {
@@ -70,7 +70,7 @@ const mockCampaigns = [
     progress: 55,
     target: 15000,
     daysLeft: 22,
-    image: "/src/assets/animalshelter.jpg",
+    image: "/assets/animalshelter.jpg",
     featured: false,
   },
 ];
