@@ -7,28 +7,36 @@ import CampaignBrowser from "./pages/CampaignBrowser";
 import CampaignDetails from "./pages/CampaignDetails";
 import Dashboard from "./pages/Dashboard";
 import CreateCampaign from "./pages/CreateCampaign";
+import SingleCampaignPage from './pages/SingleCampaignPage';
+import { WalletProvider } from "./context/WalletContext";
 
 function App() {
   return (
-    <ContractProvider>
-      <Router>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
+    <WalletProvider>
+      <ContractProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
 
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/campaigns" element={<CampaignBrowser />} />
-              <Route path="/campaigns/:id" element={<CampaignDetails />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/create-campaign" element={<CreateCampaign />} />
-            </Routes>
-          </main>
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/campaigns" element={<CampaignBrowser />} />
+                <Route path="/campaigns/:id" element={<CampaignDetails />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/create-campaign" element={<CreateCampaign />} />
+                <Route
+                  path="/campaign/:address"
+                  element={<SingleCampaignPage />}
+                />
+              </Routes>
+            </main>
 
-          <Footer />
-        </div>
-      </Router>
-    </ContractProvider>
+            <Footer />
+          </div>
+        </Router>
+      </ContractProvider>
+    </WalletProvider>
   );
 }
 

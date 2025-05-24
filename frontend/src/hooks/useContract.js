@@ -114,7 +114,9 @@ export function useContract() {
 
   const setCampaignContract = useCallback(
     (address) => {
+      console.log("Setting campaign contract for address:", address);
       if (!signer) return;
+      console.log("Setting campaign contract for address:", address);
       const campaignContract = new Contract(address, CampaignABI.abi, signer);
       setContracts((prev) => ({
         ...prev,

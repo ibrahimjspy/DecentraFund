@@ -30,10 +30,30 @@ contract DeployContracts is Script {
             platformFee
         );
 
+        // ------------------------------
+        // Create a campaign after deployment
+        // ------------------------------
+        uint256 goal = 1 ether;
+        uint256 deadline = block.timestamp + 3 days;
+        string memory title = "First Campaign";
+        string memory description = "A test campaign deployed with Foundry.";
+        string memory imageURL = "https://placekitten.com/400/300";
+        bool isFlexibleFunding = true;
+
+        address campaignAddr = factory.createCampaign(
+            goal,
+            deadline,
+            title,
+            description,
+            imageURL,
+            isFlexibleFunding
+        );
+
         vm.stopBroadcast();
 
         // Log addresses for easy reference
         console.log("EscrowManager deployed at:", address(escrowManager));
         console.log("CrowdfundingFactory deployed at:", address(factory));
+        console.log("CrowdfundingCampaign deployed at:", campaignAddr);
     }
 }
